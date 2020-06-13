@@ -12,10 +12,10 @@ function RenderLeader({leaders}) {
 
         return(
             <Media className='row'>
-                <Media className='col-md-3 push-md-3 col-lg-2 push-lg-1'>
+                <Media className='col-md-3 push-md-3 ml-auto col-lg-2 push-lg-1'>
                     <Media style={imgStyle} object src={leaders.image} alt={leaders.image} />
                 </Media>
-                <Media body className='col-md-12 push-md-3 col-lg-12 push-lg-1'>
+                <Media body className='col-md-12 push-md-3 ml-auto col-lg-12 push-lg-1'>
                     <Media heading>
                         {leaders.name}
                         <br />
@@ -26,6 +26,7 @@ function RenderLeader({leaders}) {
                     </Media>
                     <br />
                     {leaders.description}
+                    <Media className='mb-4' />
                 </Media>
             </Media>
         );
