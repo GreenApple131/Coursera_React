@@ -69,19 +69,18 @@ class Contact extends Component {
             email: ''
         }
 
-        if(this.state.touched.firstname && firstname.lenght < 2)
-            errors.firstname = 'First Name should be more than 2 characters';
-        else if(this.state.touched.firstname && firstname.lenght > 15)
-            errors.firstname = 'First Name should be less than 15 characters';
+        if(this.state.touched.firstname && firstname.length<3)
+            errors.firstname='First Name should be >= 3 characters';
+        else if(this.state.touched.firstname && firstname.length>10)
+            errors.firstname='First Name should be <= 10 characters';
 
-        if(this.state.touched.lastname && lastname.lenght < 3)
-            errors.lastname = 'Last Name should be more than 3 characters';
-        else if(this.state.touched.lastname && lastname.lenght > 15)
-            errors.lastname = 'Last Name should be less than 15 characters';
+        if(this.state.touched.lastname && lastname.length<3)
+            errors.lastname='Last Name should be >= 3 characters';
+        else if(this.state.touched.lastname && lastname.length>10)
+        errors.lastname='Last Name should be <= 10 characters';
 
-        if (this.state.touched.email && email.split('').filter(x => x === '@').lenght !=1)
-            errors.email = 'Email is wrong. Check it out';
-
+        if(this.state.touched.email && email.split('').filter(x=>x==='@').length!=1)
+            errors.email='Email should contain a @';
         return errors;
     }
 
@@ -139,8 +138,8 @@ class Contact extends Component {
                                     <Input type='text' id='firstname' name='firstname' 
                                         placeholder='First Name' 
                                         value={this.state.firstname}
-                                        valid={errors.firstname === ''}
                                         invalid={errors.firstname !== ''}
+                                        valid={errors.firstname === ''}
                                         onBlur={this.handleBlur('firstname')}
                                         onChange={this.handleInputChange} />
                                     <FormFeedback>{errors.firstname}</FormFeedback>
@@ -152,8 +151,8 @@ class Contact extends Component {
                                     <Input type="text" id="lastname" name="lastname"
                                         placeholder="Last Name"
                                         value={this.state.lastname}
-                                        valid={errors.lastname === ''}
                                         invalid={errors.lastname !== ''}
+                                        valid={errors.lastname === ''}
                                         onBlur={this.handleBlur('lastname')}
                                         onChange={this.handleInputChange} />
                                     <FormFeedback>{errors.lastname}</FormFeedback>
@@ -171,8 +170,8 @@ class Contact extends Component {
                                         defaultCountry={"ua"}
                                         value={this.state.telnum}
                                         onChange={this.handleOnChange}
-                                        valid={errors.lastname === ''}
                                         invalid={errors.lastname !== ''}
+                                        valid={errors.lastname === ''}
                                         onBlur={this.handleBlur('telnum')} />
                                     <FormFeedback>{errors.telnum}</FormFeedback>
                                 </Col>
@@ -183,8 +182,8 @@ class Contact extends Component {
                                     <Input type="email" id="email" name="email"
                                         placeholder="Email"
                                         value={this.state.email}
-                                        valid={errors.email === ''}
                                         invalid={errors.email !== ''}
+                                        valid={errors.email === ''}
                                         onBlur={this.handleBlur('email')}
                                         onChange={this.handleInputChange} />
                                     <FormFeedback>{errors.email}</FormFeedback>
@@ -237,3 +236,5 @@ class Contact extends Component {
 }
 
 export default Contact;
+
+
