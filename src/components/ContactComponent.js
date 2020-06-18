@@ -79,7 +79,7 @@ class Contact extends Component {
         else if(this.state.touched.lastname && lastname.length>10)
         errors.lastname='Last Name should be <= 10 characters';
 
-        if(this.state.touched.email && email.split('').filter(x=>x==='@').length!=1)
+        if(this.state.touched.email && email.split('').filter(x=>x==='@').length!==1)
             errors.email='Email should contain a @';
         return errors;
     }
