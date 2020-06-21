@@ -25,9 +25,9 @@ const mapStateToProps = state => { // викликається стан дани
 class Main extends Component {
 
 // цей конструктор прив'язує статичні дані до цього файлу(App.js) і робить можливим використання даних з цього файлу
-    constructor(props) {
-        super(props);
-    }
+    // constructor(props) {
+    //     super(props);
+    // }
 
 
     render() {
