@@ -17,7 +17,7 @@ import { Control, LocalForm, Errors } from 'react-redux-form';
         );
     }
 
-    function RenderComments({comments}) {
+    function RenderComments({comments, addComment, dishId}) {
         var commentList = comments.map(comment => {
             return (
                 <li key={comment.id} >
@@ -34,31 +34,35 @@ import { Control, LocalForm, Errors } from 'react-redux-form';
                 <h4>Comments</h4>
                 <ul className="list-unstyled">
                     {commentList}
-                    <CommentForm />
+                    <CommentForm dishId={dishId} addComment={addComment} />
                 </ul>
             </div>
         );
     }
 
 
-    const DishDetail = (props) => {
+    const DishDetail = (props,{comments, addComment, dishId}) => {
         if (props.dish != null) {
             return (
                 <div className="container">
                     <div className="row">
                         <Breadcrumb>
-                            <BreadcrumbItem><Link to="/menu">Menu</Link></BreadcrumbItem>
+                            <BreadcrumbItem><Link to='/menu'>Menu</Link></BreadcrumbItem>
                             <BreadcrumbItem active>{props.dish.name}</BreadcrumbItem>
                         </Breadcrumb>
                         <div className="col-12">
                             <h3>{props.dish.name}</h3>
-                            <hr />
-                        </div>     
-                        <div  className="col-12 col-md-5 m-1">
-                            <RenderDish dish={props.dish} />    
+                            <hr/>
                         </div>
-                        <div  className="col-12 col-md-5 m-1">
-                            <RenderComments comments={props.comments} />
+                    </div>
+                    <div className="row">
+                        <div className="col-12 col-md-5 m-1">
+                            <RenderDish dish={props.dish} />
+                        </div>
+                        <div className="col-12 col-md-5 m-1">
+                            <RenderComments comments={props.comments} 
+                                addComment={props.addComment} 
+                                dishId={props.dish.id} />
                         </div>
                     </div>
                 </div>
@@ -82,7 +86,7 @@ import { Control, LocalForm, Errors } from 'react-redux-form';
 
 class CommentForm extends Component {
    
-    constructor(props) {
+  constructor(props) {
     super(props);
     this.state = {
       modal: false
@@ -94,21 +98,15 @@ class CommentForm extends Component {
 
   toggle() {
     this.setState({
-      modal: !this.state.modal
+       modal: !this.state.modal
     });
   }
 
-    handleOnChange = value => {
-        console.log(value);
-        this.setState({ raiting: value }, () => {
-            console.log(this.state.raiting);
-        });
-    };
 
-    handleSubmit(values) {
-        console.log('Currnet State is: ' + JSON.stringify(values));
-        alert('Currnet State is: ' + JSON.stringify(values));
-    }
+  handleSubmit(values) {
+    this.toggle();
+    this.props.addComment(this.props.dishId, values.rating, values.author, values.comment);
+  }
 
 
   render() {
@@ -135,8 +133,8 @@ class CommentForm extends Component {
                             </Row>
                             <Row className='form-group'   //Цей тег FormGroup дозволяє використовувати bootstrap grid всередині себе>
                             >
-                                    <Label htmlFor='firstname' md={12}>Your Name</Label>
-                                    <Control.text model='.firstname' type='text' id='firstname' name='firstname' 
+                                    <Label htmlFor='author' md={12}>Your Name</Label>
+                                    <Control.text model='.author' type='text' id='firstname' name='firstname' 
                                         placeholder='First Name' 
                                         className='form-control' 
                                         validators={{
@@ -155,10 +153,14 @@ class CommentForm extends Component {
                                     />
                             </Row>
                             <Row className='form-group'>
-                                <Label htmlFor="message" md={8}>Your Comment</Label>
-                                    <Control.textarea model=".message" id="message" name="message"
+                                <Label htmlFor="comment" md={8}>Your Comment</Label>
+                                    <Control.textarea model=".comment" id="comment" name="comment"
                                         rows="5"
-                                        className='form-control' />
+                                        className='form-control'
+                                        validators={{ required }} />
+                                    <Errors className="text-danger" model=".comment" 
+                                        show="touched" 
+                                        messages={{ required: 'Required'}} />
                             </Row>
                             <ModalFooter className='form-group text-left'>
                                     <Button type="submit" color="primary">Submit Comment</Button>
