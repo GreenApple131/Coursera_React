@@ -3,12 +3,14 @@ import { Card, CardImg, CardText, CardBody, CardTitle, Breadcrumb, BreadcrumbIte
 import { Link } from 'react-router-dom';
 import { Control, LocalForm, Errors } from 'react-redux-form';
 import { Loading } from './LoadingComponent';
+import { baseUrl } from '../shared/baseUrl';
+
 
 
     function RenderDish({dish}) {
         return (
             <Card>
-                <CardImg width="100%" src={dish.image} alt={dish.name} />
+                <CardImg width="100%" src={baseUrl + dish.image} alt={dish.name} />
                 <CardBody>
                     <CardTitle heading><h4>{dish.name} - ${dish.price}</h4></CardTitle>
                     <CardText>{dish.description}</CardText>
@@ -17,31 +19,30 @@ import { Loading } from './LoadingComponent';
         );
     }
 
-    function RenderComments({comments, addComment, dishId}) {
+    function RenderComments({ comments, postComment, dishId }) {
         var commentList = comments.map(comment => {
             return (
                 <li key={comment.id} >
                     {comment.comment}
                     <br /><br />
-                    -- {comment.author}, {new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit'}).format(new Date(Date.parse(comment.date)))}
+                    -- {comment.author}, {new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit' }).format(new Date(Date.parse(comment.date)))}
                     <br /><br />
                 </li>
             );
         });
-
         return (
             <div>
                 <h4>Comments</h4>
                 <ul className="list-unstyled">
                     {commentList}
-                    <CommentForm dishId={dishId} addComment={addComment} />
+                    <CommentForm dishId={dishId} postComment={postComment} />
                 </ul>
             </div>
         );
     }
 
 
-    const DishDetail = (props,{comments, addComment, dishId}) => {
+    const DishDetail = (props,{comments, postComment, dishId}) => {
         if (props.isLoading) {
             return(
                 <div className='container'>
@@ -80,7 +81,7 @@ import { Loading } from './LoadingComponent';
                         </div>
                         <div className="col-12 col-md-5 m-1">
                             <RenderComments comments={props.comments} 
-                                addComment={props.addComment} 
+                                postComment={props.postComment} 
                                 dishId={props.dish.id} />
                         </div>
                     </div>
@@ -124,7 +125,7 @@ class CommentForm extends Component {
 
   handleSubmit(values) {
     this.toggle();
-    this.props.addComment(this.props.dishId, values.rating, values.author, values.comment);
+    this.props.postComment(this.props.dishId, values.rating, values.author, values.comment);
   }
 
 
