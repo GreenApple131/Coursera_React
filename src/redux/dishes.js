@@ -10,7 +10,6 @@ export const Dishes = (state = {
 		case ActionTypes.ADD_DISHES:
 			return {...state, isLoading: false, errMess: null, dishes: action.payload}  // береться об'єкт state і ту, що знаходиться після коми модифікує його і повертає цей содифікований об'єкт
 
-
 		case ActionTypes.DISHES_LOADING:
 			return {...state, isLoading: true, errMess: null, dishes: []}  // береться об'єкт state і ту, що знаходиться після коми модифікує його і повертає цей содифікований об'єкт
 

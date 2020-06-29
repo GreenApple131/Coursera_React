@@ -15,7 +15,7 @@ const validEmail = (val) => /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(val
 class Contact extends Component {
 
     constructor(props) {
-        super(props);
+        super();
 
 
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -28,10 +28,9 @@ class Contact extends Component {
         });
     };
 
-    handleSubmit(values) {
-        console.log('Currnet State is: ' + JSON.stringify(values));
-        alert('Currnet State is: ' + JSON.stringify(values));
+    handleSubmit=(values)=> {
         this.props.resetFeedbackForm();
+        this.props.postFeedback(values)
     }
 
 
@@ -41,11 +40,11 @@ class Contact extends Component {
                 <div className='row'>
                     <Breadcrumb>
                         <BreadcrumbItem><Link to='/menu'>Menu</Link></BreadcrumbItem>
-                        <BreadcrumbItem active>Contuct Us</BreadcrumbItem>
+                        <BreadcrumbItem active>Contact Us</BreadcrumbItem>
                     </Breadcrumb>
                 </div>
                 <div className='col-12'>
-                    <h3>Contuct Us</h3>
+                    <h3>Contact Us</h3>
                     <hr />
                 </div>
                 <div className="row row-content">

@@ -11,7 +11,6 @@ export const Comments = (state = {
         case ActionTypes.COMMENTS_FAILED:
             return { ...state, isLoading: false, errMess: action.payload, comments: []}  // береться об'єкт state і ту, що знаходиться після коми модифікує його і повертає цей содифікований об'єкт
 
-
         case ActionTypes.ADD_COMMENT:
             var comment = action.payload;
             return { ...state, comments: state.comments.concat(comment) };

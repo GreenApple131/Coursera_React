@@ -1,6 +1,8 @@
 import React from 'react';
-import { Breadcrumb, BreadcrumbItem, Card, CardBody, CardHeader, Media } from 'reactstrap';
+import { Breadcrumb, BreadcrumbItem, Card, CardBody, CardHeader, Media, CardImg } from 'reactstrap';
 import { Link } from 'react-router-dom';
+import { baseUrl } from '../shared/baseUrl';
+import {Fade,Stagger } from 'react-animation-components';
 
 
 var imgStyle = {
@@ -8,12 +10,12 @@ var imgStyle = {
 };
 
 
-function RenderLeader({leaders}) {
+function RenderLeader({leaders, item}) {
 
         return(
             <Media className='row'>
                 <Media className='col-md-3 push-md-3 ml-auto col-lg-2 push-lg-1'>
-                    <Media style={imgStyle} object src={leaders.image} alt={leaders.image} />
+                    <Media style={imgStyle} object src={baseUrl + leaders.image} alt={leaders.image} />
                 </Media>
                 <Media body className='col-md-12 push-md-3 ml-auto col-lg-12 push-lg-1'>
                     <Media heading>
@@ -36,10 +38,10 @@ function RenderLeader({leaders}) {
 
 function About(props) {
 
-    const leaders = props.leaders.map((leader) => {
+    const leaders = props.leaders.leaders.map((leader) => {
         return (
             <div>
-                <RenderLeader leaders={leader} />
+                <Fade in> <RenderLeader leaders={leader} /> </Fade>
             </div>
         );
     });
@@ -100,8 +102,10 @@ function About(props) {
                 </div>
                 <div className="col-12 row">
                     <Media list>
-                        <br />
-                        {leaders}                        
+                        <Stagger in>
+                            <br />
+                            {leaders}
+                        </Stagger>                        
                     </Media>
                 </div>
             </div>
